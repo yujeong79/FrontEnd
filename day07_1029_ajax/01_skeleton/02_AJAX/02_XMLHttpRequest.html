@@ -10,20 +10,20 @@
   <script>
     const URL = 'https://jsonplaceholder.typicode.com/todos/1'
 
-    //AJAX 통신 시작
+    // AJAX 통신 시작, xhr 객체화
     const myXhr = new XMLHttpRequest()
 
     //xhr 보내기 위해서 open 메서드를 활용
-    myXhr.open('GET', URL)
+    myXhr.open('GET', URL) // 기본값이 비동기화 true
     
     //요청 보내기
     myXhr.send() 
     
 
     console.log(myXhr)
-    console.log(myXhr.readyState)
-    const todo = myXhr.response 
-    console.log(todo)
+    console.log(myXhr.readyState) // 아직 readyState가 1이기 때문에 
+    const todo = myXhr.response // 결과가 아직 없어서
+    console.log(todo) // 아무것도 보이지 않음
     
     
 

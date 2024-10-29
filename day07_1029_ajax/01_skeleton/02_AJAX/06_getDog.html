@@ -6,7 +6,7 @@
 </head>
 <body>
   <h1>Dog API</h1>
-  <button id="btn">댕댕아 나와죠</button>
+  <button id="btn">댕댕아 나와죠</button> <!-- 버튼을 누르면 이벤트 발생 -->
   <img src="" alt="" id="dog-img">
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script>
@@ -15,20 +15,33 @@
     // 댕댕이 보여주기 위한 콜백함수 
     function getDog() {
       // 코드를 작성하세요.
-      
+
+      // 1. XMLHttpRequest 객체 생성
+      const xhr = new XMLHttpRequest();
+
+      // 2. onreadystatechange에 콜백 함수 설정
+      xhr.onreadystatechange = funciton() { // 해당 방식은 함수 구현부를 바로 넣는 표현식
+        if(xhr.readyState == 4) {
+          if(xhr.status == 200) {
+            const imgSrc = JSON.parse(xhr.response)['message'] // JSON 형태의 데이터를 가져와서 Object로 바꾸고 Obeject의 message를 가져옴, img 주소
+            const imgTag = document.querySelector('#dog-img') // 개 사진이 들어갈 img 태그를 querySelector로 가져와서
+            imgTag.src = imgSrc // img 태그의 src를 바꿔주기
+          }
+        }
+      }
+
+      // 3. XMLHttpRequest 객체를 통한 비동기화 요청
+      xhr.open('GET', URL) 
+      xhr.send()
+
+      // 4. 비동기화 요청을 하면 이제 onreadystatechange에 설정한 콜백 함수가 호출되고 실행되면서
+      //    imgTag의 src가 원하는 사진으로 변경됨
     }
 
-    // function getDog(){
-    //   axios.get(URL)
-    //   .then((response) => {
-    //     const imgSrc = response.data.message;
-    //     document.querySelector("#dog-img").setAttribute("src", imgSrc)
-    //   })
-    // }
-
     // 클라이언트에서 요소 선택 
-
+    const btn = document.querySelector("btn")
     // 이벤트 생성
+    btn.addEventListener("click", getDog)
   </script>
 </body>
 </html>

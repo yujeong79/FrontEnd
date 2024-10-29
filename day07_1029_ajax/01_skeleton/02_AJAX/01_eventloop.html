@@ -11,34 +11,29 @@
   <h1>EventLoop</h1>
   <script>
     
-    // 순서대로 출력해보기
-    // Hi
-    // a
-    // b
-    // c
-    // d
-    // Bye
-
+    console.log("Hi") 
     
+    // 순서대로 출력해보기
+    // Hi -> a -> b -> c -> d ->Bye
     // 코드를 작성하세요.
 
-    console.log("Hi") 
-
-    setTimeout(function(){
+    // setTimeout의 단위는 1000이 1초
+    // 첫번째 인자는 할 일, 두번째 인자는 초
+    setTimeout(function(){ 
       console.log("Bye")
-    }, ____)
+    }, 5000) // 5초 뒤
     setTimeout(function(){
       console.log("d")
-    }, ____)
+    }, 4000) // 4초 뒤
     setTimeout(function(){
       console.log("b")
-    }, ____)
+    }, 2000) // 2초 뒤
     setTimeout(function(){
       console.log("c")
-    }, ____)
+    }, 3000) // 3초 뒤
     setTimeout(function(){
       console.log("a")
-    }, ____)
+    }, 1000) // 1초 뒤
 
     // setTimeout(function(){}) 사용해보기
     

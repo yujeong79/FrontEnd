@@ -19,12 +19,14 @@
     //요청 보내기
     xhr.send() 
 
-    
-    xhr.onreadystatechange = function() {
-      if(xhr.readyState == xhr.DONE){
-        if(xhr.status == 200 ){
-          const todo = xhr.response
-          console.log(todo)
+    xhr.onreadystatechange = function() { // 콜백 함수를 표현식으로 정의
+      console.log(xhr.readyState) // 이게 여기서 언제 1에서 4가 되는지 모르기 때문에 아래에서 if문으로 확인을 해주는 것임
+      console.log(xhr.readyState)
+
+      if(xhr.readyState == xhr.DONE){ // xhr.readyState가 xhr.DONE(4)이고
+        if(xhr.status == 200 ){ // 서버 응답이 200이면
+          const todo = xhr.response // 그때 응답을 보여줘~ 이렇게 하면
+          console.log(todo) // 응답이 보임
         }
       }
     }
