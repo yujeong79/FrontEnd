@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>Vue</title>
+  <!-- 1. CDN 추가 
+  Vue3 라이브러리를 외부 CDN에서 가져와 Vue를 사용 가능하게 함
+  Vue 파일을 다운로드 하지 않고도 간단히 Vue 기능을 사용할 수 있게 해주는 방식 -->
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+  <div id="app">
+    <!-- 6. 꺼내서 사용할 때는 .value 가 필요없다. -->
+    <h1>{{ message }}</h1>
+    <h1>{{ message.split('').reverse().join('') }}</h1>
+  </div>
+
+  <script>
+    // 구조 분해 할당을 사용하여, Vue 객체가 가지고 있는 여러 함수와 속성 중에서 createApp 이라는 함수만 추출해 변수로 사용할 수 있게 함
+    // 중괄호 안의 이름에 따라 특정 속성이나 메서드를 추출할 수 있음
+    const { createApp, ref } = Vue;
+    
+    // 2. Vue Instance 생성 완료
+      // createApp() 함수는 Vue 어플리케이션의 인스턴스를 생성하는 역할
+      // 이 안에 data, methods 와 같은 설정 객체를 넣어 Vue 인스터를 생성할 수 있음
+    const app = createApp({
+      // setup : Vue 컴포넌트가 생성될 때 가장 먼저 호출되는 함수
+      // 컴포넌트 내에서 사용할 상태 변수, 로직, 계산된 속성 등을 정의하고 반환하여, 이 값들이 Vue 컴포넌트에서 반응적으로 사용할 수 있게 함
+      setup() {
+        // 4. 변수를 사용하기 위해서는 ref 메서드로 감싼다.
+        const message = ref("Hello World")
+        // 5. 템플릿에서 사용하기 위해서는 객체타입으로 반환해야 한다.
+        return {
+          message // 원래는 "message" : message 이렇게 적어야 맞지만 ES6부터 key와 value의 문자가 같다면 위와 같이 생략해도 써도 가능
+        }
+      }
+    })
+
+    // 3. DOM과 Vue Instance 연결 
+      // Vue 어플리케이션을 특정 HTML 요소와 연결
+      // mount("querySelector") 메서드를 사용하여 연결
+    app.mount("#app")
+
+  </script>
+
+</body>
+</html>

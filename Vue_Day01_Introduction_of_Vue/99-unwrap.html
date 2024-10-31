@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <title>unwrap</title>
+</head>
+<body>
+  <div id="app">
+    <div>{{object.id + 1}}</div> <!-- 객체의 속성에 접근하는 방법은 해당 방법과 아래의 방법 두 가지 다 가능한데  -->
+    <div>{{object["id"] + 1}}</div> <!-- key에 특수문자나 공백이 들어가면 해당 방법만 사용 가능하다.-->
+    <div>{{object.id}}</div>
+    <div>{{object.id.value}}</div>
+    <div>{{object.id.value + 1}}</div>
+    <div>{{object["id"]}}</div>
+    <div>{{id}}</div>
+    <div>{{id + 1}}</div>
+  </div>
+
+  <script>
+    
+    const { createApp, ref } = Vue;
+
+    const app = createApp({
+      setup() {
+       const object = { // object 라는 객체에 id라는 속성에 ref(0)을 담음
+          id: ref(0),
+        };
+
+        const { id } = object; // 구조 분해 할당
+        
+        return {
+          object,
+          id,
+        };
+      },
+    });
+    
+    app.mount("#app");
+
+  </script>
+
+</body>
+</html>

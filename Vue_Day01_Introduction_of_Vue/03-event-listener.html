@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>Vue</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+  <div id="app">
+    <button v-on:click="increment">{{count}}</button>
+  </div>
+
+  <script>
+    const { createApp, ref } = Vue;
+    
+    const app = createApp({
+      setup() {
+        const count = ref(0); // ref() 해서 반환되는 RefImpl 객체는 바뀌지 않고 그 안의 value가 바뀌기 때문에 const 변수에 담을 수 있음
+        const increment = function() { // 함수 표현식
+          count.value++;
+        }
+        return {
+          count,
+          increment,
+        };
+      }
+    });
+
+    app.mount("#app")
+
+  </script>
+
+</body>
+</html>
