@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app">
+    <h1>User Profile</h1>
+    <p>Name: {{ userName }}</p>
+    <p>Age: {{ userAge }}</p>
+    <button v-on:click="changeName">Change Name</button>
+    <button v-on:click="changeAge">Change Age</button>
+  </div>
+
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <script>
+
+    const { createApp, ref } = Vue;
+
+    const app = createApp({
+      setup() {
+        const userName = ref("Alice");
+        const userAge = ref(30);
+
+        const changeName = function() {
+          let inputName = prompt("Enter new name:", "Alice");
+          userName.value = inputName;
+        }
+
+        const changeAge = function() {
+          let inputAge = prompt("Enter new age:", 30);
+          userAge.value = inputAge;
+        }
+
+        return { 
+          userName,
+          userAge,
+          changeName,
+          changeAge,
+        }
+      }
+    })
+
+    app.mount("#app");
+  </script>
+</body>
+
+</html>
