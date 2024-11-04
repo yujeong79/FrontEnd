@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Vue</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  </head>
+
+  <body>
+    <div id="app">
+      <input type="text" @input="onInput"> <!-- input 이벤트가 발생하면 onInput 메서드를 실행 -->
+      <p>{{inputText1}}</p> <!-- 실시간으로 반영 -->
+      <hr />
+      <input type="text" v-model="inputText2">
+      <p>{{inputText2}}</p>
+    </div>
+    <script>
+      const { createApp, ref } = Vue;
+
+      const app = createApp({
+        setup() {
+          const inputText1 = ref("");
+          const inputText2 = ref("");
+
+          const onInput = function() {
+            inputText1.value = event.currentTarget.value; // inputText1에 현재 event의 currentTarget.value를 넣어줌
+          }
+          return {
+            inputText1,
+            inputText2,
+            onInput,
+          };
+        },
+      });
+      app.mount("#app");
+    </script>
+  </body>
+</html>

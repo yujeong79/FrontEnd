@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Vue</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  </head>
+
+  <body>
+    <div id="app">
+      <p>Count : {{count}}</p>
+      <button @click="count++">증가</button>
+      <button @click="count--">감소</button>
+      <button @click="myFunc">메서드 동작</button>
+
+      <hr>
+
+      <button @click="greeing('Hello')">Hello</button>
+      <button @click="greeing('Bye')">Bye</button>
+      <button @click="warning('event 받기 성공', $event)">event를 인자로 받기</button>
+
+      <hr>
+
+      <h1>Event Modifiers</h1>
+      <a @click.stop.prevent="onLink" href="https://www.ssafy.com">SSAFY 공홈</a>
+      <input type="text" @keyup.enter="onSubmit">
+
+    </div>
+    <script>
+      const { createApp, ref } = Vue;
+
+      const app = createApp({
+        setup() {
+          const count = ref(0);
+          const name = ref("ymg");
+
+          const myFunc = function(event) { // 이벤트가 발생하면 자동으로 해당 이벤트에 대한 event 객체를 인자로 받을 수 있음
+            console.log(event);
+            console.log(event.target);
+            console.log(`Hello ${name.value}`);
+          }
+
+          const greeting = function(message) {
+            console.log(message);
+          }
+
+          const warning = function(message, event) {
+            console.log(message);
+            console.log(event);
+          }
+
+          const onLink = function() {
+            console.log('링크를 막았습니다.');                       
+          }
+
+          const onSubmit = function() {
+            console.log('엔터를 눌렀습니다.');
+          }
+
+          return { 
+            count, 
+            myFunc,
+            greeting,
+            warning,
+            onLink,
+            onSubmit,
+          };
+
+        },
+      });
+      app.mount("#app");
+    </script>
+  </body>
+</html>

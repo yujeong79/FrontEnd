@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AJAX 요청</title>
+</head>
+<body>
+  <img src="http://localhost:8080/img/리락쿠마.jpg">
+
+  <button id="btn">게시글 조회</button>
+
+  <script>
+    document.querySelector("#btn").addEventListener("click", function(){
+      fetch("http://localhost:8080/api-board/board") // GET 요청
+      .then((response) => { // 성공적으로 요청이 갔으면 인자로 응답이 들어오고
+        return response.text() // 응답의 text를 반환
+      })
+      .then((text) => {
+        return console.log(text)
+      })
+    })
+
+  </script>
+
+</body>
+</html>

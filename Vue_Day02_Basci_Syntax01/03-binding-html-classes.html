@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Vue</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <style>
+      .active {
+        color: crimson;
+      }
+
+      .text-primary {
+        color: blue;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="app">
+      <p :class="{active : isActive}">글자색</p>
+      <p class="static" :class="{ 'active': isActive, 'text-primary': hasInfo }">Text</p>
+      <p class="static" :class="classObj">Text</p> <!-- 객체 형태로도 가능 -->
+      <p class="static" :class="[activeClass, infoClass]">Text</p> <!-- 배열 형태로도 가능 -->
+      <p class="static" :class="[{activeClass: isActive, infoClass: hasInfo}]">Text</p> <!-- 배열에 true/false 할당도 가능 -->
+    </div>
+
+    <script>
+      const { createApp, ref } = Vue;
+
+      const app = createApp({
+        setup() {
+          const isActive = ref(false);
+          const hasInfo = ref(true);
+
+          const classObj = ref({
+            'active' : isActive,
+            'text-primary' : hasInfo,
+          })
+
+          const activeClass = ref("active");
+          const infoClass = ref("text-primary");
+
+          return {
+            isActive,
+            hasInfo,
+            classObj,
+            activeClass,
+            infoClass,
+          };
+        },
+      });
+      app.mount("#app");
+    </script>
+  </body>
+</html>

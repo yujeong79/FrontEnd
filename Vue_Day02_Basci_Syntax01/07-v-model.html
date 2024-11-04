@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Vue</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  </head>
+
+  <body>
+    <div id="app">
+
+      <!-- input의 checkbox -->
+      <label for="check">check:{{checked}}</label>
+      <input type="checkbox" v-model="checked" id="check"> <!-- checked에 check 되면 true, 아니면 false를 실시간으로 반영 -->
+      
+      <hr>
+      
+      <div>체크된 이름들 : {{checkedNames}}</div>
+      <label for="Kim">Kim</label>
+      <input type="checkbox" value="Kim" v-model="checkedNames" id="Kim"> 
+      <label for="Lee">Lee</label>
+      <input type="checkbox" value="Lee" v-model="checkedNames" id="Lee"> 
+      <label for="Park">Park</label>
+      <input type="checkbox" value="Park" v-model="checkedNames" id="Park">
+
+      <hr>
+
+      <!-- select -->
+      <h1>select와 v-model</h1>
+      <p>{{selected}}가 선택되었습니다.</p>
+      
+      <select v-model="selected">
+        <option value="" disabled>기본</option> <!-- disabled : 기본으로 선택되고 이후 선택될 수 없음 -->
+        <option value="Kim">김씨</option>
+        <option value="Lee">이씨</option>
+        <option value="Park">박씨</option>
+      </select>
+
+    </div>
+    <script>
+      const { createApp, ref } = Vue;
+
+      const app = createApp({
+        setup() {
+          const checked = ref(true); // boolean과 바인딩되면 체크박스를 선택하거나 해제할 때마다 true/false로 업데이트
+          const checkedNames = ref([]); // 배열과 바인딩되면 value 속성의 값을 추가하거나 제거
+          const selected = ref("");
+
+          return {
+            checked,
+            checkedNames,
+            selected,
+          };
+        },
+      });
+      app.mount("#app");
+    </script>
+  </body>
+</html>
