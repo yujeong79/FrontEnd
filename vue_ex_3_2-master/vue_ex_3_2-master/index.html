@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .is-completed {
+      text-decoration: line-through;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <h1>Todo Application</h1>
+    <form @submit.prevent="addTodo">
+      <input type="text" v-model="inputTodo">
+      <input type="submit" value="Add">
+    </form>
+
+    <ul>
+      <li v-for="todo in todos" :key="todo.id">
+        <input type="checkbox" v-model="todo.isCompleted">
+        <span :class="{ 'is-completed': todo.isCompleted }">{{ todo.text }}</span>
+        <button @click="deleteTodo(todo.id)">Delete</button>
+      </li>
+    </ul>
+  </div>
+
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <script>
+    const { createApp, ref } = Vue;
+
+    const app = createApp({
+      setup() {
+        let id = 0;
+        
+        const todos = ref([
+          {id: id++, text:'Stack 공부', isCompleted:false },
+          {id: id++, text:'그리디 공부', isCompleted:false },
+          {id: id++, text:'DFS 공부', isCompleted:false },
+        ])
+
+        const inputTodo = ref('');
+        const addTodo = function() {
+          console.log(inputTodo);
+          if(inputTodo.value.length > 0) {
+            todos.value.push({
+              id: id++,
+              text: inputTodo.value,
+              isCompleted: false,
+            })
+          }
+
+          inputTodo.value = ''; // 입력 필드를 초기화
+        }
+
+        const deleteTodo = function(targetId) {
+          console.log(todos.value);
+          const idx = todos.value.findIndex((todo)=> {
+            return todo.id === targetId;
+          })
+
+          todos.value.splice(idx, 1);
+        }
+
+        return { 
+          todos,
+          inputTodo,
+          addTodo,
+          deleteTodo, 
+        };
+      },
+    });
+
+    app.mount('#app');
+  </script>
+</body>
+
+</html>
