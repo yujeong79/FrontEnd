@@ -11,7 +11,9 @@
     <label for="isActive">전시 중인 정보만 보기</label>
     <input type="checkbox" id="isActive" v-model="isActive">
     <ul>
-      <li v-for="exhibition in isActiveExhibition" :key="exhibition.name">
+      <li v-for="exhibition in (isActive ? isActiveExhibition : exhibitions)" 
+      :key="exhibition.name"
+      @click="change(exhibition.name)">
         <h3>{{exhibition.name}}</h3>
         <hr>
         <p>전시 장소: {{exhibition.location}}</p>
@@ -28,23 +30,33 @@
     const app = createApp({
       setup() {
         const exhibitions = ref([
-          {name: '무라카미 다카시 : 무라카시 좀비', location: '부산 시립 미술관', price: 1000, active: true},
-          {name: '마우라치오 카텔란 개인전', location: '리움 미술관', price: 30000, active: true},
-          {name: '조선백자전', location: '리움 미술관', price: 30000, active: true},
-          {name: '한국 실험미술 1960 - 1970', location: '국립 현대 미술관', price: 0, active: true},
-          {name: '에드워드 호퍼 : 길 위에서', location: '서울 시립 미술관', price: 1000, active: false},
-          {name: '알렉산더 칼더 x 이우환', location: '국제갤러리 서울점', price: 15000, active: false},
+          {name: '무라카미 다카시 : 무라카시 좀비', location: '부산 시립 미술관', price: 1000, active: '전시 중'},
+          {name: '마우라치오 카텔란 개인전', location: '리움 미술관', price: 30000, active: '전시 중'},
+          {name: '조선백자전', location: '리움 미술관', price: 30000, active: '전시 중'},
+          {name: '한국 실험미술 1960 - 1970', location: '국립 현대 미술관', price: 0, active: '전시 중'},
+          {name: '에드워드 호퍼 : 길 위에서', location: '서울 시립 미술관', price: 1000, active: '전시 종료'},
+          {name: '알렉산더 칼더 x 이우환', location: '국제갤러리 서울점', price: 15000, active: '전시 종료'},
         ]);
 
         const isActive = ref(false);
 
         const isActiveExhibition = computed(()=>{
-          return isActive.value ? exhibitions.value.filter((item) => item.active) : exhibitions.value;// 객체의 isActive가 true면 반환
+          return exhibitions.value.filter((item) => item.active === '전시 중')
         })
+
+        const change = function(name) {
+          exhibitions.value.forEach((item) => {
+            if(item.name === name) {
+              item.active = item.active === '전시 중' ? '전시 종료' : '전시 중';
+            }
+          });
+        };
 
         return {
           isActive,
+          exhibitions,
           isActiveExhibition,
+          change,
         };
       }
     });
