@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Vue</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  </head>
+
+  <!-- computed todos -->
+  <body>
+    <div id="app">
+      
+      <h2>남은 할 일</h2>
+      
+      <h3>방법1. 템플릿에서 계산</h3>
+      <p>{{todos.length > 0 ? "아직 할 일이 남았다." : "할 일을 다 했다! "}}</p>
+      
+      <hr>
+      
+      <h3>방법2. couputed 사용</h3>
+      <p>{{restOfTodos}}</p>
+      <p>{{restOfTodos}}</p>
+
+      <hr>
+
+      <h3>방법3. computed 하지 않은 function 사용</h3>
+      <p>{{getRestOfTodos()}}</p>
+      <p>{{getRestOfTodos()}}</p>
+
+    </div>
+    <script>
+      const { createApp, ref, computed } = Vue;
+
+      const app = createApp({
+        setup() {
+          const todos = ref([
+            {text: "Vue 공부하기"},
+            {text: "Vue 실습하기"},
+            {text: "Spring 공부하기"},
+            {text: "Spring 실습하기"},
+          ])
+
+          const restOfTodos = computed(() => {
+            console.log(1);
+            return todos.value.length > 0 ? "아직 할 일이 남았다." : "할 일을 다 했다!";
+          })
+
+          const getRestOfTodos = function() {
+            console.log(2);
+            return todos.value.length > 0 ? "아직 할 일이 남았다." : "할 일을 다 했다!";
+          }
+
+          return {
+            todos,
+            restOfTodos,
+            getRestOfTodos,
+          };
+
+        },
+      });
+      app.mount("#app");
+    </script>
+  </body>
+</html>

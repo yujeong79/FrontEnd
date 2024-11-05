@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .decorate {
+      text-decoration: line-through;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <h1 :style="{color:colorCrimson}">Heading</h1>
+    <p :class="{ decorate: isDecorate }">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+    <button @click="toggleDecorate">Toggle Text Style</button>
+  </div>
+  
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <script>
+    const { createApp, ref } = Vue;
+
+    const app = createApp({
+      setup() {
+        const colorCrimson = ref("crimson");
+        const isDecorate = ref(false);
+        const toggleDecorate = function() {
+          if(isDecorate.value === true)
+            isDecorate.value = false;
+          else 
+            isDecorate.value = true;
+        }
+
+        return {
+          colorCrimson,
+          isDecorate,
+          toggleDecorate,
+        };
+
+      },
+    });
+
+    app.mount("#app");
+  </script>
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Vue</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  </head>
+
+  <body>
+    <div id="app">
+
+      <h3>v-for in 배열</h3>
+      <div v-for="person in myArr">
+        이름 : {{person.name}}, 나이 : {{person.age}} <!-- array의 요소 각각이 <div> 태그로 감싸짐 -->
+      </div>
+
+      <hr>
+      <h3>v-for in index</h3>
+      <div v-for="(person, index) in myArr"> <!-- Vue가 첫번째 item은 객체로 받고 두번째 item을 idx로 받기 때문에 순서가 중요! -->
+        {{index}}번 이름 : {{person.name}}, 나이 : {{person.age}}
+      </div>
+
+      <hr>
+      <h3>v-for in Object</h3>
+      <div v-for="item in myObj"> <!-- key와 value 형태의 myObj는 key로 value를 접근해서 value를 가져옴 -->
+        {{item}}
+      </div>
+
+      <hr>
+      <h3>v-for in Object(key 가져오기)</h3>
+      <div v-for="(value, key) in myObj"> <!-- 순서 중요! --> 
+        {{key}}는 {{value}}
+      </div>
+
+      <hr>
+      <h3>v-for in Object(key와 index 가져오기)</h3>
+      <div v-for="(value, key, index) in myObj"> <!-- 순서 중요! --> 
+        {{index}} {{key}} : {{value}}
+      </div>
+
+      <hr>
+      <h3>template 사용</h3>
+      <ul>
+        <template v-for="item in myArr">
+          <li>{{item.name}}</li>
+          <li>{{item.age}}</li>
+          <br/>
+        </template>
+      </ul>
+
+      <hr>
+      <h3>중첩 반복문</h3>
+      <ul v-for="person in myInfo">
+        <li v-for="friend in person.friends">
+          {{person.name}}과 {{friend}}는 친구입니다.
+        </li>
+      </ul>
+
+    </div>
+    <script>
+      const { createApp, ref } = Vue;
+
+      const app = createApp({
+        setup() {
+          const myArr = ref([ // 2명 이상의 사람 객체를 담은 배열
+            { name: "Alice", age: 20 },
+            { name: "Bella", age: 21 },
+          ]);
+          const myObj = ref({ // 한 사람에 대한 객체
+            name: "Cathy",
+            age: 30,
+          });
+
+          // nested v-for
+          const myInfo = ref([ // 객체 안에 배열을 가진 객체를 담은 배열
+            { name: "Alice", age: 20, friends: ["Bella", "Cathy", "Dan"] },
+            { name: "Bella", age: 21, friends: ["Alice", "Cathy"] },
+          ]);
+
+          return {
+            myArr,
+            myObj,
+            myInfo,
+          };
+        },
+      });
+      app.mount("#app");
+    </script>
+  </body>
+</html>

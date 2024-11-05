@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Vue</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  </head>
+
+  <body>
+    <div id="app">
+
+      <h3>onUpdated 확인</h3>
+      <button @click="count++">증가</button> <!-- count 데이터가 업데이트 될 때마다 onUpdated 실행 -->
+      <p>{{count}}</p>
+
+    </div>
+    <script>
+      const { createApp, ref, onMounted, onUpdated } = Vue;
+
+      const app = createApp({
+        setup() {
+          onMounted(()=>{
+            // 초기에 API 통신을 위해서 보여주고 싶은 기본 화면이 있는 경우 많이 사용
+            console.log('연결 완료!');
+          })
+
+          const count = ref(0);
+
+          onUpdated(()=>{
+            console.log('업데이트 성공') // 업데이트될 때마다 실행
+          })
+          
+          return {
+            count,
+          };
+        },        
+      });
+      app.mount("#app");
+    </script>
+  </body>
+</html>
