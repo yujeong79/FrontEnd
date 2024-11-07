@@ -11,7 +11,7 @@
 <script setup>
 
     const props = defineProps({
-        productList: Object,
+        productList: Array,
     });
 
     console.log(props.productList[0]);
