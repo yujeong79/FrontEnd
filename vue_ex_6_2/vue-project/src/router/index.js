@@ -20,6 +20,10 @@ const router = createRouter({
       path: '/user/:id', // 동적 라우팅
       name: 'user',
       component: UserView,
+      beforeEnter: (to, from) => {
+        console.log(to);
+       if(to.params.id !== 'admin') return {name: 'home'};
+      },
     },
   ],
 })
