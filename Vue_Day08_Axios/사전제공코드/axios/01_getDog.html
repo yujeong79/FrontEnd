@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Dog API</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="text-center">Dog API</h1>
+      <div class="d-flex justify-content-center my-3">
+        <button class="btn btn-outline-danger mx-3" id="btn1">XMLHttpRequest</button>
+        <button class="btn btn-outline-warning mx-3" id="btn2">Fetch</button>
+        <button class="btn btn-outline-primary mx-3" id="btn3">Axios</button>
+      </div>
+      <div class="d-flex justify-content-center">
+        <img src="" alt="" id="dog-img" />
+      </div>
+    </div>
+    <script>
+      const URL = 'https://dog.ceo/api/breeds/image/random'; // 이곳으로 가면 강아지 사진 url이 담긴 객체 형태로 계속 줌
+
+      // 1. XMLHttpRequest 방식
+      document.querySelector("#btn1").addEventListener('click', ()=>{
+        const xhr = new XMLHttpRequest();
+
+        // 상태가 변경이 될 때마다 메서드를 호출
+        xhr.onreadystatechange = function() {
+          if(xhr.readyState == xhr.DONE) {
+            if(xhr.status == 200) {
+              console.log(JSON.parse(xhr.response).message); // xhr.response에 저 URL에 있는 JSON 객체가 들어옴
+            
+              const imgSrc = JSON.parse(xhr.response).message; // 해당 응답이 가지고 있는 강아지 사진 URL을 저장
+              const imgTag = document.querySelector("#dog-img"); // img src를 써야하는 요소를 가져와서
+
+              imgTag.src = imgSrc; // setAttribute
+            }
+          }
+        };
+
+        xhr.open('GET', URL); // GET 방식으로 해당 URL에 요청
+        xhr.send(); // 실제로 요청을 보냄
+
+      });
+
+      // 2. FETCH 방식
+      document.querySelector("#btn2").addEventListener("click", ()=>{
+        fetch(URL) // 이런식으로 요청을 바로 쉽게 날림
+          .then((response)=>{ // 요청을 성공적으로 날리면 promise 객체로 응답이 이렇게 들어옴, 꼭 이름이 response가 아니여도 됨
+            console.log(response);
+            return response.json();
+          })
+          .then((response)=>{
+            console.log(response); // promise 객체를 반환해서 다시 .then을 수행했더니 여기선 이제 그냥 json 형태로 보이게 됨 ... 왜?
+            document.querySelector("#dog-img").setAttribute('src', response.message);
+          })
+      });
+
+      // 3. Axios 방식
+      document.querySelector("#btn3").addEventListener("click", ()=>{
+        axios.get(URL) // URL에 GET 요청을 보냄
+          .then((response)=>{
+            console.log(response.data.message); // response 안에 data 안에 실제 응답 데이터가 들어있는데 알아서 JSON으로 변환해줌
+            document.querySelector("#dog-img").setAttribute('src', response.data.message);
+          })
+      });
+
+    </script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
