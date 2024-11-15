@@ -29,7 +29,7 @@ export const useYoutubeStore = defineStore('youtube', () => {
     .catch(()=>{})
   };
 
-  const video = ref(null);
+  const video = ref(null); // 
   const clickVideo = function(clickedVideo) {
     video.value = clickedVideo;
   };
