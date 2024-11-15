@@ -4,7 +4,8 @@
       <RouterLink to="/">Home</RouterLink> | 
       <RouterLink :to="{name: 'boardList'}">BoardList</RouterLink> |
       <RouterLink :to="{name: 'boardCreate'}">BoardCreate</RouterLink> | 
-      <RouterLink :to="{ name: 'login' }">Login</RouterLink>
+      <RouterLink :to="{ name: 'login' }">Login</RouterLink> |
+      <RouterLink :to="{ name: 'youtube' }">Youtube</RouterLink>
     </nav>
 
     <router-view></router-view>
